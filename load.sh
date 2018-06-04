@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for file in data/schema/*.sql; do
+for file in data/schema/schema*.sql; do
     psql -f $file
 done
 
