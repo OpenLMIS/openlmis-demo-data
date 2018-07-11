@@ -47,6 +47,7 @@ pipeline {
                         docker cp "$cid":/schema data 2>/dev/null || true
                         docker cp "$cid":/demo-data data 2>/dev/null || true
                     done
+                    mkdir data/demo-data
                     mv data/*.csv data/demo-data/
 
                     cd .demo-data-ref-distro
