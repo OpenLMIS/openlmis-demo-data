@@ -31,11 +31,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    rm -rf data/schema/
-                    rm -rf data/demo-data/
+                    rm -vrf data/schema/
+                    rm -vrf data/demo-data/
 
                     cd .demo-data-ref-distro
-                    mv settings-sample.env settings.env
+                    mv -v settings-sample.env settings.env
                     sed -i '' -e "s#spring_profiles_active=.*#spring_profiles_active=#" settings.env  2>/dev/null || true
                     export OL_HTTP_PORT=8085
 
@@ -47,14 +47,14 @@ pipeline {
                         docker cp "$cid":/schema data 2>/dev/null || true
                         docker cp "$cid":/demo-data data 2>/dev/null || true
                     done
-                    mkdir data/demo-data/
-                    mv data/*.csv data/demo-data/
+                    mkdir -vp data/demo-data/
+                    mv -v data/*.csv data/demo-data/
 
                     cd .demo-data-ref-distro
                     /usr/local/bin/docker-compose -f docker-compose.yml down -v
 
                     cd ..
-                    rm -rf .demo-data-ref-distro/
+                    rm -vrf .demo-data-ref-distro/
                 '''
             }
             post {
