@@ -1,7 +1,21 @@
+-- copy requisition's demo data
+\copy requisition.requisition_templates (id,createdDate,numberOfPeriodsToAverage,populateStockOnHandFromStockCards,name,archived) FROM '/data/demo-data/requisition.requisition_templates.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.columns_maps (requisitionTemplateId,key,name,label,indicator,displayOrder,isDisplayed,source,definition,requisitionColumnId,requisitionColumnOptionId,tag) FROM '/data/demo-data/requisition.columns_maps.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.requisition_template_assignments (id,programId,facilityTypeId,templateId) FROM '/data/demo-data/requisition.requisition_template_assignments.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.requisitions (id,version,createdDate,modifiedDate,facilityId,programId,processingPeriodId,status,emergency,supervisoryNodeId,templateId,numberOfMonthsInPeriod,supplyingFacilityId,draftStatusMessage) FROM '/data/demo-data/requisition.requisitions.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.status_changes (id,createdDate,authorId,status,requisitionId) FROM '/data/demo-data/requisition.status_changes.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.status_messages (id,requisitionId,statusChangeId,authorId,body,status,createdDate) FROM '/data/demo-data/requisition.status_messages.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.stock_adjustment_reasons (id,reasonId,name,description,reasonCategory,reasonType,isFreeTextAllowed,requisitionId,hidden) FROM '/data/demo-data/requisition.stock_adjustment_reasons.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.requisition_line_items (id,orderableId,requisitionId,stockOnHand,beginningBalance,totalReceivedQuantity,requestedQuantity,totalConsumedQuantity,requestedQuantityExplanation,totalStockoutDays,maxPeriodsOfStock,skipped,nonFullSupply,adjustedConsumption,averageConsumption,pricePerPack,idealStockAmount,totalLossesAndAdjustments,remarks,approvedQuantity,packsToShip,calculatedOrderQuantity,total,totalCost,calculatedOrderQuantityIsa) FROM '/data/demo-data/requisition.requisition_line_items.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.previous_adjusted_consumptions (requisitionlineitemid,previousadjustedconsumption) FROM '/data/demo-data/requisition.previous_adjusted_consumptions.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.stock_adjustments (id,reasonId,quantity,requisitionLineItemId) FROM '/data/demo-data/requisition.stock_adjustments.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.jasper_templates (id,description,name,type,data) FROM '/data/demo-data/requisition.jasper_templates.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.template_parameters (id,dataType,displayName,name,selectExpression,selectProperty,templateId,required,selectMethod,selectBody,displayProperty) FROM '/data/demo-data/requisition.template_parameters.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.jasper_template_parameter_dependencies (id,parameterid,dependency,placeholder) FROM '/data/demo-data/requisition.jasper_template_parameter_dependencies.csv' DELIMITER ',' CSV HEADER;
+-- recreate requisitions permission strings
+DELETE FROM requisition.requisition_permission_strings;
+INSERT INTO requisition.requisition_permission_strings WITH requisition_rights (name) AS (VALUES ('REQUISITION_VIEW')) SELECT uuid_generate_v4() AS id , r.id AS requisitionid , rr.name || '|' || r.facilityid || '|' || r.programid AS permissionstring FROM requisition.requisitions r CROSS JOIN requisition_rights rr;
+-- copy stock management's demo data
 \copy stockmanagement.stock_card_line_item_reasons (id,name,description,reasonCategory,reasonType,isFreeTextAllowed) FROM '/data/demo-data/stockmanagement.stock_card_line_item_reasons.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.stock_card_line_item_reason_tags (tag,reasonId) FROM '/data/demo-data/stockmanagement.stock_card_line_item_reason_tags.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.valid_reason_assignments (id,programId,facilityTypeId,reasonId,hidden) FROM '/data/demo-data/stockmanagement.valid_reason_assignments.csv' DELIMITER ',' CSV HEADER;
@@ -17,6 +31,7 @@
 \copy stockmanagement.stock_card_line_items (id,destinationfreetext,documentnumber,occurreddate,processeddate,quantity,reasonfreetext,signature,sourcefreetext,userid,destinationid,origineventid,reasonid,sourceid,stockcardid,extradata) FROM '/data/demo-data/stockmanagement.stock_card_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.physical_inventory_line_item_adjustments (id,quantity,reasonid,physicalinventorylineitemid,stockcardlineitemid,stockeventlineitemid) FROM '/data/demo-data/stockmanagement.physical_inventory_line_item_adjustments.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.jasper_templates (id,data,description,name,type) FROM '/data/demo-data/stockmanagement.jasper_templates.csv' DELIMITER ',' CSV HEADER;
+-- copy fulfillment's demo data
 \copy fulfillment.orders (id,createdbyid,createddate,emergency,externalid,ordercode,programid,quotedcost,receivingfacilityid,requestingfacilityid,status,supplyingfacilityid,lastupdaterid,lastupdateddate) FROM '/data/demo-data/fulfillment.orders.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.order_line_items (id,orderId,orderableId,orderedQuantity) FROM '/data/demo-data/fulfillment.order_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.shipments (id,orderId,shippedDate,shippedById,extraData,notes) FROM '/data/demo-data/fulfillment.shipments.csv' DELIMITER ',' CSV HEADER;
