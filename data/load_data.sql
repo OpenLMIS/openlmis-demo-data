@@ -9,9 +9,6 @@
 \copy requisition.requisition_line_items (id,orderableId,requisitionId,stockOnHand,beginningBalance,totalReceivedQuantity,requestedQuantity,totalConsumedQuantity,requestedQuantityExplanation,totalStockoutDays,maxPeriodsOfStock,skipped,nonFullSupply,adjustedConsumption,averageConsumption,pricePerPack,idealStockAmount,totalLossesAndAdjustments,remarks,approvedQuantity,packsToShip,calculatedOrderQuantity,total,totalCost,calculatedOrderQuantityIsa) FROM '/data/demo-data/requisition.requisition_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.previous_adjusted_consumptions (requisitionlineitemid,previousadjustedconsumption) FROM '/data/demo-data/requisition.previous_adjusted_consumptions.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.stock_adjustments (id,reasonId,quantity,requisitionLineItemId) FROM '/data/demo-data/requisition.stock_adjustments.csv' DELIMITER ',' CSV HEADER;
-\copy requisition.jasper_templates (id,description,name,type,data) FROM '/data/demo-data/requisition.jasper_templates.csv' DELIMITER ',' CSV HEADER;
-\copy requisition.template_parameters (id,dataType,displayName,name,selectExpression,selectProperty,templateId,required,selectMethod,selectBody,displayProperty) FROM '/data/demo-data/requisition.template_parameters.csv' DELIMITER ',' CSV HEADER;
-\copy requisition.jasper_template_parameter_dependencies (id,parameterid,dependency,placeholder) FROM '/data/demo-data/requisition.jasper_template_parameter_dependencies.csv' DELIMITER ',' CSV HEADER;
 -- recreate requisitions permission strings
 DELETE FROM requisition.requisition_permission_strings;
 INSERT INTO requisition.requisition_permission_strings WITH requisition_rights (name) AS (VALUES ('REQUISITION_VIEW')) SELECT uuid_generate_v4() AS id , r.id AS requisitionid , rr.name || '|' || r.facilityid || '|' || r.programid AS permissionstring FROM requisition.requisitions r CROSS JOIN requisition_rights rr;
