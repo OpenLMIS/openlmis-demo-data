@@ -38,7 +38,7 @@ pipeline {
                     mv -v settings-sample.env settings.env
 
                     /usr/local/bin/docker-compose -f docker-compose.yml pull
-                    /usr/local/bin/docker-compose -f docker-compose.yml up --no-start
+                    /usr/local/bin/docker-compose -f docker-compose.yml -p demo-data-ref-distro up --no-start
                     cd ..
 
                     for cid in $(docker ps -a -q --filter name=demo-data-ref-distro); do
