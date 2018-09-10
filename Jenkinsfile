@@ -38,10 +38,10 @@ pipeline {
                     mv -v settings-sample.env settings.env
 
                     /usr/local/bin/docker-compose -f docker-compose.yml pull
-                    /usr/local/bin/docker-compose -f docker-compose.yml -p demo-data-ref-distro up --no-start
+                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro up --no-start
                     cd ..
 
-                    for cid in $(docker ps -a -q --filter name=demo-data-ref-distro); do
+                    for cid in $(docker ps -a -q --filter name=demodatarefdistro); do
                         docker cp "$cid":/schema data 2>/dev/null || true
                         docker cp "$cid":/demo-data data 2>/dev/null || true
                     done
