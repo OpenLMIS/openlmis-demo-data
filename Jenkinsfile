@@ -37,7 +37,7 @@ pipeline {
                     cd .demo-data-ref-distro
                     mv -v settings-sample.env settings.env
 
-                    /usr/local/bin/docker-compose -f docker-compose.yml pull
+                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro pull
                     /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro up --no-start
                     cd ..
 
@@ -50,7 +50,7 @@ pipeline {
                     mv -v data/*.csv data/demo-data/
 
                     cd .demo-data-ref-distro
-                    /usr/local/bin/docker-compose -f docker-compose.yml down -v
+                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro down -v
 
                     cd ..
                     rm -vrf .demo-data-ref-distro/
