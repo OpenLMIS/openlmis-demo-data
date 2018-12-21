@@ -32,8 +32,6 @@ pipeline {
             steps {
                 sh './build.sh'
                 sh './test.sh'
-                sh 'rm -vrf .demo-data-ref-distro/'
-                sh 'rm -vrf build/'
             }
             post {
                 failure {
@@ -53,6 +51,9 @@ pipeline {
         }
     }
     post {
+        always {
+            cleanWs()
+        }
         fixed {
             slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Back to normal"
         }
