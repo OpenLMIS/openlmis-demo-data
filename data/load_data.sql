@@ -1,8 +1,8 @@
 -- copy cce's demo data
-\copy cce.cce_catalog_items (id,fromPqsCatalog,equipmentCode,type,model,manufacturer,energySource,dateOfPrequal,storageTemperature,maxOperatingTemp,minOperatingTemp,energyConsumption,holdoverTime,netVolume,visibleInCatalog,archived,grossVolume) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
+\copy cce.cce_catalog_items (id,fromPqsCatalog,equipmentCode,type,model,manufacturer,energySource,dateOfPrequal,storageTemperature,maxOperatingTemp,minOperatingTemp,energyConsumption,holdoverTime,netVolume,visibleInCatalog,archived,grossVolume) FROM '/data/demo-data/cce.cce_catalog_items.csv' DELIMITER ',' CSV HEADER;
 \copy cce.cce_inventory_items (id,facilityId,catalogItemId,programId,equipmentTrackingId,yearOfInstallation,functionalStatus,utilization,voltageStabilizer,backupGenerator,voltageRegulator,manualTemperatureGauge,remoteTemperatureMonitor,lastModifierId,modifiedDate,referenceName,reasonNotWorkingOrNotInUse,decommissionDate)  FROM '/data/demo-data/cce.cce_inventory_items.csv' DELIMITER ',' CSV HEADER;
 \copy cce.cce_alerts (id,externalId,type,inventoryItemId,startTimestamp,active,endTimestamp,dismissTimestamp) FROM '/data/demo-data/cce.cce_alerts.csv' DELIMITER ',' CSV HEADER;
-\copy cce.cce.cce_alert_status_messages (alertid,locale,message) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
+\copy cce.cce_alert_status_messages (alertid,locale,message) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
 -- copy notification's demo data
 \copy notification.notifications (id,userid,important,createddate) FROM '/data/demo-data/notification.notifications.csv' DELIMITER ',' CSV HEADER;
 \copy notification.notification_messages (id,notificationid,channel,body,subject) FROM '/data/demo-data/notification.notification_messages.csv' DELIMITER ',' CSV HEADER;
@@ -11,7 +11,7 @@
 \copy requisition.columns_maps (requisitionTemplateId,key,name,label,indicator,displayOrder,isDisplayed,source,definition,requisitionColumnId,requisitionColumnOptionId,tag) FROM '/data/demo-data/requisition.columns_maps.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.requisition_template_assignments (id,programId,facilityTypeId,templateId) FROM '/data/demo-data/requisition.requisition_template_assignments.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.requisitions (id,version,createdDate,modifiedDate,facilityId,programId,processingPeriodId,status,emergency,supervisoryNodeId,templateId,numberOfMonthsInPeriod,supplyingFacilityId,draftStatusMessage) FROM '/data/demo-data/requisition.requisitions.csv' DELIMITER ',' CSV HEADER;
-\copy requisition.status_changes (id,createdDate,authorId,status,requisitionId) FROM '/data/demo-data/requisition.status_changes.csv' DELIMITER ',' CSV HEADER;
+\copy requisition.status_changes (id,createdDate,authorId,status,requisitionId,supervisoryNodeId) FROM '/data/demo-data/requisition.status_changes.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.status_messages (id,requisitionId,statusChangeId,authorId,body,status,createdDate) FROM '/data/demo-data/requisition.status_messages.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.stock_adjustment_reasons (id,reasonId,name,description,reasonCategory,reasonType,isFreeTextAllowed,requisitionId,hidden) FROM '/data/demo-data/requisition.stock_adjustment_reasons.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.requisition_line_items (id,orderableId,requisitionId,stockOnHand,beginningBalance,totalReceivedQuantity,requestedQuantity,totalConsumedQuantity,requestedQuantityExplanation,totalStockoutDays,maxPeriodsOfStock,skipped,nonFullSupply,adjustedConsumption,averageConsumption,pricePerPack,idealStockAmount,totalLossesAndAdjustments,remarks,approvedQuantity,packsToShip,calculatedOrderQuantity,total,totalCost,calculatedOrderQuantityIsa) FROM '/data/demo-data/requisition.requisition_line_items.csv' DELIMITER ',' CSV HEADER;
