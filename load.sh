@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PSQL="psql --single-transaction --set AUTOCOMMIT=off --set ON_ERROR_STOP=on"
+
 # For each schema to load, need to drop any existing schema before loading
 for file in data/schema/schema*.sql; do
 
@@ -7,8 +9,8 @@ for file in data/schema/schema*.sql; do
     noprefix=${file#*.}       # Remove prefix inclusively up to first dot
     schemaname=${noprefix%.*} # Remove suffix inclusively up to last dot
 
-    psql -c "drop schema if exists ${schemaname} cascade;" 2>&1
-    psql -f $file
+    ${PSQL} -c "drop schema if exists ${schemaname} cascade;" 2>&1
+    ${PSQL} -f $file
 done
 
-psql -f data/load_data.sql
+${PSQL} -f data/load_data.sql
