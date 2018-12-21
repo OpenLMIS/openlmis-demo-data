@@ -28,9 +28,10 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('Build and Test') {
             steps {
                 sh './build.sh'
+                sh './test.sh'
                 sh 'rm -vrf .demo-data-ref-distro/'
                 sh 'rm -vrf build/'
             }
@@ -40,9 +41,8 @@ pipeline {
                 }
             }
         }
-        stage('Build and push image') {
+        stage('Push image') {
             steps {
-                sh "docker build -t openlmis/demo-data ."
                 sh "docker push openlmis/demo-data"
             }
             post {
