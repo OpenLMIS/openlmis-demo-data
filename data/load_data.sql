@@ -1,4 +1,6 @@
 -- copy cce's demo data
+\copy cce.cce_catalog_items (id,fromPqsCatalog,equipmentCode,type,model,manufacturer,energySource,dateOfPrequal,storageTemperature,maxOperatingTemp,minOperatingTemp,energyConsumption,holdoverTime,netVolume,visibleInCatalog,archived,grossVolume) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
+\copy cce.cce_inventory_items (id,facilityId,catalogItemId,programId,equipmentTrackingId,yearOfInstallation,functionalStatus,utilization,voltageStabilizer,backupGenerator,voltageRegulator,manualTemperatureGauge,remoteTemperatureMonitor,lastModifierId,modifiedDate,referenceName,reasonNotWorkingOrNotInUse,decommissionDate)  FROM '/data/demo-data/cce.cce_inventory_items.csv' DELIMITER ',' CSV HEADER;
 \copy cce.cce_alerts (id,externalId,type,inventoryItemId,startTimestamp,active,endTimestamp,dismissTimestamp) FROM '/data/demo-data/cce.cce_alerts.csv' DELIMITER ',' CSV HEADER;
 \copy cce.cce.cce_alert_status_messages (alertid,locale,message) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
 -- copy notification's demo data
