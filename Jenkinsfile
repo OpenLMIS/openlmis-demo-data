@@ -30,31 +30,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '''
-                    rm -vrf data/schema/
-                    rm -vrf data/demo-data/
-
-                    cd .demo-data-ref-distro
-                    mv -v settings-sample.env settings.env
-
-                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro pull
-                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro up --no-start
-                    cd ..
-
-                    for cid in $(docker ps -a -q --filter name=demodatarefdistro); do
-                        docker cp "$cid":/schema data 2>/dev/null || true
-                        docker cp "$cid":/demo-data data 2>/dev/null || true
-                    done
-
-                    mkdir -vp data/demo-data/
-                    mv -v data/*.csv data/demo-data/
-
-                    cd .demo-data-ref-distro
-                    /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro down -v
-
-                    cd ..
-                    rm -vrf .demo-data-ref-distro/
-                '''
+                sh './build.sh'
+                sh 'rm -vrf .demo-data-ref-distro/'
+                sh 'rm -vrf build/'
             }
             post {
                 failure {
