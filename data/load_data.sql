@@ -5,7 +5,7 @@
 \copy cce.cce_alert_status_messages (alertid,locale,message) FROM '/data/demo-data/cce.cce_alert_status_messages.csv' DELIMITER ',' CSV HEADER;
 -- copy notification's demo data
 \copy notification.notifications (id,userid,important,createddate) FROM '/data/demo-data/notification.notifications.csv' DELIMITER ',' CSV HEADER;
-\copy notification.notification_messages (id,notificationid,channel,body,subject) FROM '/data/demo-data/notification.notification_messages.csv' DELIMITER ',' CSV HEADER;
+\copy notification.notification_messages (id,notificationid,channel,body,subject,send) FROM '/data/demo-data/notification.notification_messages.csv' DELIMITER ',' CSV HEADER;
 -- copy requisition's demo data
 \copy requisition.requisition_templates (id,createdDate,numberOfPeriodsToAverage,populateStockOnHandFromStockCards,name,archived) FROM '/data/demo-data/requisition.requisition_templates.csv' DELIMITER ',' CSV HEADER;
 \copy requisition.columns_maps (requisitionTemplateId,key,name,label,indicator,displayOrder,isDisplayed,source,definition,requisitionColumnId,requisitionColumnOptionId,tag) FROM '/data/demo-data/requisition.columns_maps.csv' DELIMITER ',' CSV HEADER;
