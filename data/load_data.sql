@@ -35,7 +35,6 @@ INSERT INTO requisition.requisition_permission_strings WITH requisition_rights (
 \copy stockmanagement.stock_cards (id,facilityid,lotid,orderableid,programid,origineventid) FROM '/data/demo-data/stockmanagement.stock_cards.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.stock_card_line_items (id,destinationfreetext,documentnumber,occurreddate,processeddate,quantity,reasonfreetext,signature,sourcefreetext,userid,destinationid,origineventid,reasonid,sourceid,stockcardid,extradata) FROM '/data/demo-data/stockmanagement.stock_card_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy stockmanagement.physical_inventory_line_item_adjustments (id,quantity,reasonid,physicalinventorylineitemid,stockcardlineitemid,stockeventlineitemid) FROM '/data/demo-data/stockmanagement.physical_inventory_line_item_adjustments.csv' DELIMITER ',' CSV HEADER;
-\copy stockmanagement.jasper_templates (id,data,description,name,type) FROM '/data/demo-data/stockmanagement.jasper_templates.csv' DELIMITER ',' CSV HEADER;
 -- copy fulfillment's demo data
 \copy fulfillment.orders (id,createdbyid,createddate,emergency,externalid,ordercode,programid,quotedcost,receivingfacilityid,requestingfacilityid,status,supplyingfacilityid,lastupdaterid,lastupdateddate) FROM '/data/demo-data/fulfillment.orders.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.order_line_items (id,orderId,orderableId,orderedQuantity) FROM '/data/demo-data/fulfillment.order_line_items.csv' DELIMITER ',' CSV HEADER;
