@@ -20,7 +20,7 @@ mv -v build/data/*schema.*.sql build/data/schema/
 mkdir -vp build/data/demo-data/
 cp -v data/*.csv build/data/demo-data/
 cp -v data/load_data.sql build/data/load_data.sql
-cp -v data/load_services_demo_data.sql build/data/load-services_demo_data.sql
+cp -v data/load_services_demo_data.sql build/data/load_services_demo_data.sql
 
 cd .demo-data-ref-distro
 /usr/local/bin/docker-compose -f docker-compose.yml -p demodatarefdistro down -v
