@@ -32,7 +32,7 @@
 \copy referencedata.lots (id,lotcode,expirationdate,manufacturedate,tradeitemid,active) FROM 'data/demo-data/referencedata.lots.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.role_rights (roleid,rightid) FROM 'data/demo-data/referencedata.role_rights.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.requisition_group_program_schedules (id,programid,processingscheduleid,directdelivery,requisitiongroupid) FROM 'data/demo-data/referencedata.requisition_group_program_schedules.csv' DELIMITER ',' CSV HEADER;
-\copy referencedata.facility_type_approved_products (id,facilitytypeid,programid,orderableid,maxperiodsofstock,minperiodsofstock,emergencyorderpoint,active) FROM 'data/demo-data/referencedata.facility_type_approved_products.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.facility_type_approved_products (id,versionid,facilitytypeid,programid,orderableid,maxperiodsofstock,minperiodsofstock,emergencyorderpoint,active) FROM 'data/demo-data/referencedata.facility_type_approved_products.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.supply_lines (id,supervisorynodeid,programid,supplyingfacilityid,description) FROM 'data/demo-data/referencedata.supply_lines.csv' DELIMITER ',' CSV HEADER;
 -- copy requisition's service demo data
 \copy requisition.jasper_templates (id,description,name,type,data) FROM 'data/demo-data/requisition.jasper_templates.csv' DELIMITER ',' CSV HEADER;
