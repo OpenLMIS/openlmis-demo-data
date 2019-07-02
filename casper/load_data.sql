@@ -11,15 +11,7 @@
 INSERT INTO referencedata.programs (id, code, name, description, active, shownonfullsupplytab, periodsskippable, enabledatephysicalstockcountcompleted)
   VALUES
     ('19ef7927-2597-4f75-b594-a0807d71f14a','ilshosp','Redesigned ILS','ILS Hospital','true', 'true','false', 'false');
---
--- This program is part of the OpenLMIS logistics management information system platform software.
--- Copyright © 2013 VillageReach
---
--- This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
--- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org.
---
+
 INSERT INTO referencedata.geographic_levels
 (id, code, name, levelNumber) VALUES
 ('48cfc451-99a8-44c1-b3d0-1d2d41e0cb1d', 'country', 'Country', 1),
@@ -329,10 +321,18 @@ INSERT into referencedata.roles(id, name, description) VALUES
 
 INSERT into referencedata.role_rights
 (roleId, rightid) VALUES
-  ((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
-  ((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
+((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
+((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_CREATE')),
+((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
 
-  ((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
+((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
+((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_APPROVE')),
+((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
+
+((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
+((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_AUTHORIZE')),
+((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
+
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'FACILITIES_MANAGE')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'USER_ROLES_MANAGE')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'PROGRAMS_MANAGE')),
@@ -386,26 +386,12 @@ INSERT into referencedata.supervisory_nodes
 
 --Insert role assignments
 
---INSERT into referencedata.role_assignments
---(type, id, userId, roleId, programId, supervisoryNodeId) VALUES
---  ('supervision', '659c9b9f-c028-45b2-bf33-be77b7dc28e8', (SELECT ID from referencedata.USERS WHERE username = 'StoreInCharge'), (SELECT id from referencedata.roles WHERE name = 'Create & Submit'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
---  ('supervision', 'b9e1c145-b633-43cd-ad0a-a4f4cc667777', (SELECT ID from referencedata.USERS WHERE username = 'lmu'), (SELECT id from referencedata.roles WHERE name = 'Approve Only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
---  ('supervision', '2659d31c-7f83-4d85-bc71-1abc9009115e', (SELECT ID from referencedata.USERS WHERE username = 'FacilityInCharge'), (SELECT id from referencedata.roles WHERE name = 'Authorize only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
---  ('direct', 'aad366b2-59cf-4bac-9ca2-fd74f91fd13b', (SELECT id from referencedata.users WHERE userName = 'Admin123'), (SELECT id from referencedata.roles WHERE name = 'Admin'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL);
---
-
-
 INSERT into referencedata.role_assignments
 (type, id, userId, roleId, programId, supervisoryNodeId) VALUES
-  ('supervision', uuid_generate_v4(), (SELECT ID from referencedata.USERS WHERE username = 'StoreInCharge'), (SELECT id from referencedata.roles WHERE name = 'Storeroom Manager'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
-  ('supervision', uuid_generate_v4(), (SELECT ID from referencedata.USERS WHERE username = 'lmu'), (SELECT id from referencedata.roles WHERE name = 'District Storeroom Manager'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
-  ('supervision', uuid_generate_v4(), (SELECT ID from referencedata.USERS WHERE username = 'FacilityInCharge'), (SELECT id from referencedata.roles WHERE name = 'Store Manager'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
-  ('direct', uuid_generate_v4(), (SELECT id from referencedata.users WHERE userName = 'Admin123'), (SELECT id from referencedata.roles WHERE name = 'Admin'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
-
-
-
-
-
+  ('supervision', '659c9b9f-c028-45b2-bf33-be77b7dc28e8', (SELECT ID from referencedata.USERS WHERE username = 'StoreInCharge'), (SELECT id from referencedata.roles WHERE name = 'Create & Submit'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
+  ('supervision', 'b9e1c145-b633-43cd-ad0a-a4f4cc667777', (SELECT ID from referencedata.USERS WHERE username = 'lmu'), (SELECT id from referencedata.roles WHERE name = 'Approve Only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
+  ('supervision', '2659d31c-7f83-4d85-bc71-1abc9009115e', (SELECT ID from referencedata.USERS WHERE username = 'FacilityInCharge'), (SELECT id from referencedata.roles WHERE name = 'Authorize only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
+  ('direct', 'aad366b2-59cf-4bac-9ca2-fd74f91fd13b', (SELECT id from referencedata.users WHERE userName = 'Admin123'), (SELECT id from referencedata.roles WHERE name = 'Admin'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL);
 
 
 INSERT INTO referencedata.processing_schedules (id, code, name, description) VALUES
