@@ -277,7 +277,7 @@ insert into referencedata.program_orderables(id, programId, orderableid, fullSup
 
 
 --Insert facility_approved_products
-insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, versionid) values
+insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, orderableversionid) values
 ('430418a6-5b15-4ffa-a4ab-ad6d8369ed2e',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
  (select id from referencedata.orderables where  code='10010129AC'), 2, 1),
 ('c5fb65b8-772c-4a2a-a45b-d76ac0bbec2f',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
@@ -310,16 +310,10 @@ INSERT into referencedata.roles(id, name, description) VALUES
 INSERT into referencedata.role_rights
 (roleId, rightid) VALUES
 ((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
-((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_CREATE')),
-((SELECT  id from referencedata.roles WHERE name = 'Create & Submit'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
 
 ((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
-((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_APPROVE')),
-((SELECT id from referencedata.roles WHERE name = 'Approve Only'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
 
 ((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
-((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_AUTHORIZE')),
-((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_DELETE')),
 
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'FACILITIES_MANAGE')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'USER_ROLES_MANAGE')),
@@ -557,7 +551,6 @@ INSERT INTO referencedata.right_assignments(id,rightname,facilityid,programid,us
 ('7a2b6391-6b6b-47f7-bd24-3faa9850269c','FACILITY_APPROVED_ORDERABLES_MANAGE',NULL,NULL,'35316636-6264-6331-2d34-3933322d3462'),
 ('5f9ac286-e319-4ded-b579-a4208591e4bb','ORDERABLES_MANAGE',NULL,NULL,'35316636-6264-6331-2d34-3933322d3462'),
 ('9dccb71e-7d9a-40e3-884b-9b6737e3d79a','GEOGRAPHIC_ZONES_MANAGE',NULL,NULL,'35316636-6264-6331-2d34-3933322d3462'),
-('b2e4dc3d-f949-4b98-a5bd-15dce8787187','SYSTEM_NOTIFICATIONS_MANAGE',NULL,NULL,'35316636-6264-6331-2d34-3933322d3462'),
 ('f95d083a-8794-4ee3-9625-64d8cd84a6dc','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a','5806ca9e-24e0-4b40-9638-f551e6048e27'),
 ('9e767bd1-0e48-480c-9cf7-c7ae5f156d10','REPORTS_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a','81104549-a8e0-454d-86c8-dada103365e1'),
 ('d7c453f5-edb2-4c87-8255-57bbec4d0fe1','PROGRAMS_MANAGE',NULL,NULL,'35316636-6264-6331-2d34-3933322d3462'),
