@@ -277,23 +277,23 @@ insert into referencedata.program_orderables(id, programId, orderableid, fullSup
 
 
 --Insert facility_approved_products
-insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock) values
+insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, versionid) values
 ('430418a6-5b15-4ffa-a4ab-ad6d8369ed2e',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
- (select id from referencedata.orderables where  code='10010129AC'), 2),
+ (select id from referencedata.orderables where  code='10010129AC'), 2, 1),
 ('c5fb65b8-772c-4a2a-a45b-d76ac0bbec2f',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010031MD'), 2),
+(select id from referencedata.orderables where  code='10010031MD'), 2, 1),
 ('d0712f5d-46bb-4dfe-a277-68cc8876d74c',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010222SC'), 2),
+(select id from referencedata.orderables where  code='10010222SC'), 2, 1),
 ('1b0345c7-33ad-4d38-bc56-87b96fbcf7d1',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010190SP'), 2),
+(select id from referencedata.orderables where  code='10010190SP'), 2, 1),
 ('f0a17ebf-744f-4226-a116-72eb94338883',(select id from referencedata.facility_types where code='heac'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010129AC'), 2),
+(select id from referencedata.orderables where  code='10010129AC'), 2, 1),
 ('7be9d936-3194-477d-870d-0db535d61142',(select id from referencedata.facility_types where code='heac'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010031MD'), 2),
+(select id from referencedata.orderables where  code='10010031MD'), 2, 1),
 ('37ecc6dc-e267-4edd-96fe-5351d1e91db6',(select id from referencedata.facility_types where code='heac'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010222SC'), 2),
+(select id from referencedata.orderables where  code='10010222SC'), 2, 1),
 ('c8843e80-9bd3-4845-991f-00e3c8e36d3a',(select id from referencedata.facility_types where code='heac'), (select id from referencedata.programs where code='ilshosp'),
-(select id from referencedata.orderables where  code='10010190SP'), 2);
+(select id from referencedata.orderables where  code='10010190SP'), 2, 1);
 
 
 
