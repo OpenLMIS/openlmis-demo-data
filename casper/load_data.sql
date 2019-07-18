@@ -514,7 +514,7 @@ insert into  stockmanagement.valid_reason_assignments (id,programId,facilityType
 (uuid_generate_v4(), (select id from referencedata.programs  where code='ilshosp'), (select id from referencedata.facility_types where code='ddho'),'0676fdea-9ba8-4e6d-ae26-bb14f0dcfecd', true );
 
 
-INSERT INTO referencedata.right_assignments(id,rightname,facilityid,programid,userid) VALUES
+INSERT INTO referencedata.right_assignments(id,userid,rightname,facilityid,programid) VALUES
 ('dd00584d-80f4-49fa-9d91-23499d245226','35316636-6264-6331-2d34-3933322d3462','PROCESSING_SCHEDULES_MANAGE',NULL,NULL),
 ('b0106b29-ff10-4509-9d3d-95960235ab86','35316636-6264-6331-2d34-3933322d3462','SUPPLY_LINES_MANAGE',NULL,NULL),
 ('771d81f3-60ac-4f8e-9993-dd0a7538f27e','35316636-6264-6331-2d34-3933322d3462','REQUISITION_TEMPLATES_MANAGE',NULL,NULL),
