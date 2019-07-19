@@ -13,5 +13,4 @@ for file in data/schema/schema*.sql; do
     ${PSQL} -f $file
 done
 
-${PSQL} -f data/load_data.sql
-${PSQL} -f data/load_services_demo_data.sql
+${PSQL} -f data/load_data.sql && ${PSQL} -f data/load_services_demo_data.sql

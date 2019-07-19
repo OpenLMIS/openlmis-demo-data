@@ -1,3 +1,13 @@
+-- copy reference data's demo data
+\copy referencedata.dispensables (id,type) FROM '/data/demo-data/referencedata.dispensables.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.dispensable_attributes (dispensableid,key,value) FROM '/data/demo-data/referencedata.dispensable_attributes.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.orderables (id,code,dispensableid,fullproductname,netcontent,packroundingthreshold,roundtozero,description,extradata,versionid) FROM '/data/demo-data/referencedata.orderables.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.facility_types (id,code,name,active,displayorder) FROM '/data/demo-data/referencedata.facility_types.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.orderable_display_categories (id,code,displayname,displayorder) FROM '/data/demo-data/referencedata.orderable_display_categories.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.programs (id,code,name,active,periodsskippable,skipauthorization,shownonfullsupplytab,enabledatephysicalstockcountcompleted) FROM '/data/demo-data/referencedata.programs.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.program_orderables (id,programid,orderableid,orderabledisplaycategoryid,dosesperpatient,active,fullsupply,displayorder,priceperpack,orderableversionid) FROM '/data/demo-data/referencedata.program_orderables.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.orderable_identifiers (key,value,orderableid,orderableversionid) FROM '/data/demo-data/referencedata.orderable_identifiers.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.facility_type_approved_products (id,versionid,facilitytypeid,programid,orderableid,maxperiodsofstock,minperiodsofstock,emergencyorderpoint,active) FROM '/data/demo-data/referencedata.facility_type_approved_products.csv' DELIMITER ',' CSV HEADER;
 -- copy cce's demo data
 \copy cce.cce_catalog_items (id,fromPqsCatalog,equipmentCode,type,model,manufacturer,energySource,dateOfPrequal,storageTemperature,maxOperatingTemp,minOperatingTemp,energyConsumption,holdoverTime,netVolume,visibleInCatalog,archived,grossVolume) FROM '/data/demo-data/cce.cce_catalog_items.csv' DELIMITER ',' CSV HEADER;
 \copy cce.cce_inventory_items (id,facilityId,catalogItemId,programId,equipmentTrackingId,yearOfInstallation,functionalStatus,utilization,voltageStabilizer,backupGenerator,voltageRegulator,manualTemperatureGauge,remoteTemperatureMonitor,lastModifierId,modifiedDate,referenceName,reasonNotWorkingOrNotInUse,decommissionDate)  FROM '/data/demo-data/cce.cce_inventory_items.csv' DELIMITER ',' CSV HEADER;
