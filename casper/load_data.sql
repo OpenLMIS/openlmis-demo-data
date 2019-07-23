@@ -255,7 +255,7 @@ insert into referencedata.dispensable_attributes
 
 --Insert products
 insert into referencedata.orderables
-(id, code, fullproductName, description, netcontent, packRoundingThreshold, roundToZero,dispensableid,versionid) values
+(id, code, fullproductName, description, netcontent, packRoundingThreshold, roundToZero,dispensableid,versionnumber) values
 ('b477a8e4-056f-4506-ab57-c7ef5f6afd33','10010129AC','Zinc Sulphate','Zinc Sulphate',100,1,'true','bc51ce3e-322a-4d41-a9ec-aef2aee77d55',1),
 ('b327c607-5a87-415d-8c62-daff58def51a','10010031MD','Griseofulvin',NULL,1000,1,'true','5ccbecf3-3403-4331-8d34-f49030005472',1),
 ('72c581bd-93dd-43e2-b9e0-4b13002fdf97','10010222SC','LOSARTAN 50MG TABLETS','LOSARTAN 50MG TABLETS',28,1,'true','5667378b-160a-4dc4-aaf3-6ab21ffae8e3',1),
@@ -265,7 +265,7 @@ insert into referencedata.orderables
 
 
 --Insert program_products
-insert into referencedata.program_orderables(id, programId, orderableid, fullSupply, priceperpack, active, displayOrder, orderabledisplaycategoryId, orderableversionid) values
+insert into referencedata.program_orderables(id, programId, orderableid, fullSupply, priceperpack, active, displayOrder, orderabledisplaycategoryId, orderableversionnumber) values
 ('46a33d1d-d9a5-4ed6-9f38-00eae4079c78',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010129AC'),'true',0.00,'true',455,(select id from referencedata.orderable_display_categories where code='cgi'),1),
 ('2ed21424-6e08-471a-a66f-1f36639846a6',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010031MD'),'true',0.00,'true',0,(select id from referencedata.orderable_display_categories where code='cgi'),1),
 ('e264962a-45ec-4c7f-8f99-83c37dfe22b8',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010222SC'),'true',6300.00,'true',560,(select id from referencedata.orderable_display_categories where code='cgi'),1),
@@ -277,7 +277,7 @@ insert into referencedata.program_orderables(id, programId, orderableid, fullSup
 
 
 --Insert facility_approved_products
-insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, orderableversionid) values
+insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, orderableversionnumber) values
 ('430418a6-5b15-4ffa-a4ab-ad6d8369ed2e',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
  (select id from referencedata.orderables where  code='10010129AC'), 2, 1),
 ('c5fb65b8-772c-4a2a-a45b-d76ac0bbec2f',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),

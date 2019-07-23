@@ -6,7 +6,7 @@
 \copy referencedata.facilities (id,active,code,comment,description,enabled,godowndate,golivedate,name,openlmisaccessible,geographiczoneid,operatedbyid,typeid,extradata,location) FROM '/data/demo-data/referencedata.facilities.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.supply_partners (id,name,code) FROM '/data/demo-data/referencedata.supply_partners.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.supply_partner_associations (id,programId,supervisoryNodeId,supplyPartnerId) FROM '/data/demo-data/referencedata.supply_partner_associations.csv' DELIMITER ',' CSV HEADER;
-\copy referencedata.supply_partner_association_orderables (supplyPartnerAssociationId,orderableId,orderableVersionId) FROM '/data/demo-data/referencedata.supply_partner_association_orderables.csv' DELIMITER ',' CSV HEADER;
+\copy referencedata.supply_partner_association_orderables (supplyPartnerAssociationId,orderableId,orderableVersionNumber) FROM '/data/demo-data/referencedata.supply_partner_association_orderables.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.users (id,username,email,firstname,lastname,verified,active,allownotify,homefacilityid,timezone) FROM '/data/demo-data/referencedata.users.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.service_accounts (id,createdby,createddate) FROM '/data/demo-data/referencedata.service_accounts.csv' DELIMITER ',' CSV HEADER;
 \copy referencedata.supervisory_nodes (id,code,name,facilityid,parentid,partnerid,extradata) FROM '/data/demo-data/referencedata.supervisory_nodes.csv' DELIMITER ',' CSV HEADER;
