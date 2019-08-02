@@ -47,8 +47,8 @@ INSERT INTO requisition.requisition_permission_strings WITH requisition_rights (
 \copy stockmanagement.physical_inventory_line_item_adjustments (id,quantity,reasonid,physicalinventorylineitemid,stockcardlineitemid,stockeventlineitemid) FROM '/data/demo-data/stockmanagement.physical_inventory_line_item_adjustments.csv' DELIMITER ',' CSV HEADER;
 -- copy fulfillment's demo data
 \copy fulfillment.orders (id,createdbyid,createddate,emergency,externalid,ordercode,programid,quotedcost,receivingfacilityid,requestingfacilityid,status,supplyingfacilityid,lastupdaterid,lastupdateddate) FROM '/data/demo-data/fulfillment.orders.csv' DELIMITER ',' CSV HEADER;
-\copy fulfillment.order_line_items (id,orderId,orderableId,orderedQuantity) FROM '/data/demo-data/fulfillment.order_line_items.csv' DELIMITER ',' CSV HEADER;
+\copy fulfillment.order_line_items (id,orderId,orderableId,orderableVersionNumber,orderedQuantity) FROM '/data/demo-data/fulfillment.order_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.shipments (id,orderId,shippedDate,shippedById,extraData,notes) FROM '/data/demo-data/fulfillment.shipments.csv' DELIMITER ',' CSV HEADER;
-\copy fulfillment.shipment_line_items (id,shipmentId,orderableId,quantityShipped) FROM '/data/demo-data/fulfillment.shipment_line_items.csv' DELIMITER ',' CSV HEADER;
+\copy fulfillment.shipment_line_items (id,shipmentId,orderableId,orderableVersionNumber,quantityShipped) FROM '/data/demo-data/fulfillment.shipment_line_items.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.proofs_of_delivery (id,shipmentId,deliveredBy,receivedBy,receivedDate,status) FROM '/data/demo-data/fulfillment.proofs_of_delivery.csv' DELIMITER ',' CSV HEADER;
-\copy fulfillment.proof_of_delivery_line_items (id,orderableId,proofOfDeliveryId,quantityAccepted,useVvm,quantityRejected) FROM '/data/demo-data/fulfillment.proof_of_delivery_line_items.csv' DELIMITER ',' CSV HEADER;
+\copy fulfillment.proof_of_delivery_line_items (id,orderableId,orderableVersionNumber,proofOfDeliveryId,quantityAccepted,useVvm,quantityRejected) FROM '/data/demo-data/fulfillment.proof_of_delivery_line_items.csv' DELIMITER ',' CSV HEADER;
