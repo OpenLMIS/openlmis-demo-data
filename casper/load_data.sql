@@ -255,7 +255,7 @@ insert into referencedata.dispensable_attributes
 
 --Insert products
 insert into referencedata.orderables
-(id, code, fullproductName, description, netcontent, packRoundingThreshold, roundToZero,dispensableid,versionnumber) values
+(id, code, fullproductName, description, netcontent, packRoundingThreshold, roundToZero,dispensableid,versionid) values
 ('b477a8e4-056f-4506-ab57-c7ef5f6afd33','10010129AC','Zinc Sulphate','Zinc Sulphate',100,1,'true','bc51ce3e-322a-4d41-a9ec-aef2aee77d55',1),
 ('b327c607-5a87-415d-8c62-daff58def51a','10010031MD','Griseofulvin',NULL,1000,1,'true','5ccbecf3-3403-4331-8d34-f49030005472',1),
 ('72c581bd-93dd-43e2-b9e0-4b13002fdf97','10010222SC','LOSARTAN 50MG TABLETS','LOSARTAN 50MG TABLETS',28,1,'true','5667378b-160a-4dc4-aaf3-6ab21ffae8e3',1),
@@ -265,7 +265,7 @@ insert into referencedata.orderables
 
 
 --Insert program_products
-insert into referencedata.program_orderables(id, programId, orderableid, fullSupply, priceperpack, active, displayOrder, orderabledisplaycategoryId, orderableversionnumber) values
+insert into referencedata.program_orderables(id, programId, orderableid, fullSupply, priceperpack, active, displayOrder, orderabledisplaycategoryId, orderableversionid) values
 ('46a33d1d-d9a5-4ed6-9f38-00eae4079c78',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010129AC'),'true',0.00,'true',455,(select id from referencedata.orderable_display_categories where code='cgi'),1),
 ('2ed21424-6e08-471a-a66f-1f36639846a6',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010031MD'),'true',0.00,'true',0,(select id from referencedata.orderable_display_categories where code='cgi'),1),
 ('e264962a-45ec-4c7f-8f99-83c37dfe22b8',(select id from referencedata.programs where code='ilshosp'),(select id from referencedata.orderables where code = '10010222SC'),'true',6300.00,'true',560,(select id from referencedata.orderable_display_categories where code='cgi'),1),
@@ -277,7 +277,7 @@ insert into referencedata.program_orderables(id, programId, orderableid, fullSup
 
 
 --Insert facility_approved_products
-insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, orderableversionnumber) values
+insert into referencedata.facility_type_approved_products(id, facilityTypeId, programid, orderableid, maxperiodsOfStock, orderableversionid) values
 ('430418a6-5b15-4ffa-a4ab-ad6d8369ed2e',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
  (select id from referencedata.orderables where  code='10010129AC'), 2, 1),
 ('c5fb65b8-772c-4a2a-a45b-d76ac0bbec2f',(select id from referencedata.facility_types where code='disp'), (select id from referencedata.programs where code='ilshosp'),
@@ -315,6 +315,7 @@ INSERT into referencedata.role_rights
 
 ((SELECT id from referencedata.roles WHERE name = 'Authorize only'), (select id from referencedata.rights where name = 'REQUISITION_VIEW')),
 
+((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'RIGHTS_VIEW')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'FACILITIES_MANAGE')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'USER_ROLES_MANAGE')),
 ((SELECT id from referencedata.roles WHERE name = 'Admin'), (select id from referencedata.rights where name = 'PROGRAMS_MANAGE')),
@@ -348,6 +349,10 @@ INSERT into referencedata.users
       id
     from referencedata.facilities
     WHERE code = 'MZ520495'), 'Evance', 'Nkya', 'Frank_Doe@openlmis.com', TRUE, TRUE),
+  ('5b2fbb38-6245-4ca9-9390-7b560985e84d', 'administrator', (SELECT
+      id
+    from referencedata.facilities
+    WHERE code = 'MZ510054'), 'Administrator', 'Doe', 'Admin_Doe@openlmis.com', TRUE, TRUE),
     ('81104549-a8e0-454d-86c8-dada103365e1', 'Admin123', (SELECT
       id
     from referencedata.facilities
@@ -373,7 +378,11 @@ INSERT into referencedata.role_assignments
   ('supervision', '659c9b9f-c028-45b2-bf33-be77b7dc28e8', (SELECT ID from referencedata.USERS WHERE username = 'StoreInCharge'), (SELECT id from referencedata.roles WHERE name = 'Create & Submit'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
   ('supervision', 'b9e1c145-b633-43cd-ad0a-a4f4cc667777', (SELECT ID from referencedata.USERS WHERE username = 'lmu'), (SELECT id from referencedata.roles WHERE name = 'Approve Only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
   ('supervision', '2659d31c-7f83-4d85-bc71-1abc9009115e', (SELECT ID from referencedata.USERS WHERE username = 'FacilityInCharge'), (SELECT id from referencedata.roles WHERE name = 'Authorize only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
-  ('direct', 'aad366b2-59cf-4bac-9ca2-fd74f91fd13b', (SELECT id from referencedata.users WHERE userName = 'Admin123'), (SELECT id from referencedata.roles WHERE name = 'Admin'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL);
+  ('supervision', '95e2881c-91c3-4824-a092-8d0850244e14', (SELECT ID from referencedata.USERS WHERE username = 'administrator'), (SELECT id from referencedata.roles WHERE name = 'Create & Submit'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
+  ('supervision', 'dfb49743-6340-4c2e-add0-74dfb8d55c08', (SELECT ID from referencedata.USERS WHERE username = 'administrator'), (SELECT id from referencedata.roles WHERE name = 'Approve Only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), (select id from referencedata.supervisory_nodes where code='MWAN-SNZ')),
+  ('supervision', '4735308d-70b5-4ff4-817a-a4f9207223ae', (SELECT ID from referencedata.USERS WHERE username = 'administrator'), (SELECT id from referencedata.roles WHERE name = 'Authorize only'), (SELECT id from referencedata.programs WHERE code = 'ilshosp'), NULL),
+  ('direct', 'fe3ba304-befd-4c1c-a6ae-d0cc36a0b678', (SELECT id from referencedata.users WHERE userName = 'administrator'), (SELECT id from referencedata.roles WHERE name = 'Admin'), NULL, NULL),
+  ('direct', 'aad366b2-59cf-4bac-9ca2-fd74f91fd13b', (SELECT id from referencedata.users WHERE userName = 'Admin123'), (SELECT id from referencedata.roles WHERE name = 'Admin'), NULL, NULL);
 
 
 INSERT INTO referencedata.processing_schedules (id, code, name, description) VALUES
@@ -483,12 +492,14 @@ insert into auth.auth_users (id,enabled,password,username) values
 ((select id from referencedata.users where username = 'StoreInCharge'),TRUE,'$2a$10$4IZfidcJzbR5Krvj87ZJdOZvuQoD/kvPAJe549rUNoP3N3uH0Lq2G','StoreInCharge'),
 ((select id from referencedata.users where username = 'FacilityInCharge'),TRUE,'$2a$10$4IZfidcJzbR5Krvj87ZJdOZvuQoD/kvPAJe549rUNoP3N3uH0Lq2G','FacilityInCharge'),
 ((select id from referencedata.users where username = 'lmu'),TRUE,'$2a$10$4IZfidcJzbR5Krvj87ZJdOZvuQoD/kvPAJe549rUNoP3N3uH0Lq2G','lmu'),
+((select id from referencedata.users where username = 'administrator'),TRUE,'$2a$10$4IZfidcJzbR5Krvj87ZJdOZvuQoD/kvPAJe549rUNoP3N3uH0Lq2G','administrator'),
 ((select id from referencedata.users where username = 'Admin123'),TRUE,'$2a$10$4IZfidcJzbR5Krvj87ZJdOZvuQoD/kvPAJe549rUNoP3N3uH0Lq2G','Admin123');
 
 insert into notification.user_contact_details (referenceDataUserId,phoneNumber,email,allowNotify,emailVerified) values
 ((select id from referencedata.users where username = 'StoreInCharge'),NULL,'Fatima_Doe@openlmis.com','false','true'),
 ((select id from referencedata.users where username = 'FacilityInCharge'),NULL,'Jane_Doe@openlmis.com','false','true'),
 ((select id from referencedata.users where username = 'lmu'),NULL,'Frank_Doe@openlmis.com','false','true'),
+((select id from referencedata.users where username = 'administrator'),NULL,'Admin_Doe@openlmis.com','false','true'),
 ((select id from referencedata.users where username = 'Admin123'),NULL,'John_Doe@openlmis.com','false','true');
 
 
@@ -515,41 +526,57 @@ insert into  stockmanagement.valid_reason_assignments (id,programId,facilityType
 (uuid_generate_v4(), (select id from referencedata.programs  where code='ilshosp'), (select id from referencedata.facility_types where code='ddho'),'0676fdea-9ba8-4e6d-ae26-bb14f0dcfecd', true );
 
 
+INSERT INTO auth.oauth_client_details (clientId,authorities,authorizedGrantTypes,clientSecret,"scope")
+VALUES ('superset','TRUSTED_CLIENT','authorization_code','changeme','read,write');
+
 INSERT INTO referencedata.right_assignments(id,userid,rightname,facilityid,programid) VALUES
-('dd00584d-80f4-49fa-9d91-23499d245226','35316636-6264-6331-2d34-3933322d3462','PROCESSING_SCHEDULES_MANAGE',NULL,NULL),
-('b0106b29-ff10-4509-9d3d-95960235ab86','35316636-6264-6331-2d34-3933322d3462','SUPPLY_LINES_MANAGE',NULL,NULL),
-('771d81f3-60ac-4f8e-9993-dd0a7538f27e','35316636-6264-6331-2d34-3933322d3462','REQUISITION_TEMPLATES_MANAGE',NULL,NULL),
-('e826c4db-842f-4d2d-89cc-55e8d164ab0f','35316636-6264-6331-2d34-3933322d3462','USER_ROLES_MANAGE',NULL,NULL),
-('ca1e2d36-eed3-4e6f-bdeb-cd2d75753edd','35316636-6264-6331-2d34-3933322d3462','STOCK_CARD_TEMPLATES_MANAGE',NULL,NULL),
-('c002d54f-acc4-4acb-a22c-44f1f7daef68','35316636-6264-6331-2d34-3933322d3462','STOCK_CARD_LINE_ITEM_REASONS_MANAGE',NULL,NULL),
-('491ce931-b7fa-43a2-ab6f-0b99bd1c99f7','35316636-6264-6331-2d34-3933322d3462','FACILITIES_MANAGE',NULL,NULL),
-('cbb0dcd4-7a4f-49bf-8393-5d2b127acd32','35316636-6264-6331-2d34-3933322d3462','STOCK_DESTINATIONS_MANAGE',NULL,NULL),
-('47a1387c-ea05-4aca-abec-7daa1aa5f7dd','35316636-6264-6331-2d34-3933322d3462','RIGHTS_VIEW',NULL,NULL),
-('20440d69-a2b0-4d20-96cb-48568b59c040','35316636-6264-6331-2d34-3933322d3462','STOCK_SOURCES_MANAGE',NULL,NULL),
-('1a0ac602-d7d5-4216-81cb-ac7611ee6d3a','35316636-6264-6331-2d34-3933322d3462','SUPERVISORY_NODES_MANAGE',NULL,NULL),
-('3dd9b43c-edb9-47cf-aa6b-2a40a55d4b2b','35316636-6264-6331-2d34-3933322d3462','REQUISITION_GROUPS_MANAGE',NULL,NULL),
-('71228d3b-21f8-4c2b-9e15-ef2d6073c4ef','35316636-6264-6331-2d34-3933322d3462','SERVICE_ACCOUNTS_MANAGE',NULL,NULL),
-('7041a54f-bc31-434d-af78-b66ee53b226b','35316636-6264-6331-2d34-3933322d3462','SYSTEM_SETTINGS_MANAGE',NULL,NULL),
-('27f84103-c7ca-4047-9dd2-de9a5c4bcff8','35316636-6264-6331-2d34-3933322d3462','STOCK_ORGANIZATIONS_MANAGE',NULL,NULL),
-('d13ef734-c48c-4832-a107-b85667ec421b','35316636-6264-6331-2d34-3933322d3462','SUPPLY_PARTNERS_MANAGE',NULL,NULL),
-('ecdac4d7-3085-43d1-980c-09ee1cb4dc58','35316636-6264-6331-2d34-3933322d3462','STOCK_ADJUSTMENT_REASONS_MANAGE',NULL,NULL),
-('16d0068b-4851-4af1-8da0-3b044ad83c6b','35316636-6264-6331-2d34-3933322d3462','CCE_MANAGE',NULL,NULL),
-('19e42c08-cbea-46f9-9652-8fa97cdf9ded','35316636-6264-6331-2d34-3933322d3462','USERS_MANAGE',NULL,NULL),
-('7a2b6391-6b6b-47f7-bd24-3faa9850269c','35316636-6264-6331-2d34-3933322d3462','FACILITY_APPROVED_ORDERABLES_MANAGE',NULL,NULL),
-('5f9ac286-e319-4ded-b579-a4208591e4bb','35316636-6264-6331-2d34-3933322d3462','ORDERABLES_MANAGE',NULL,NULL),
-('9dccb71e-7d9a-40e3-884b-9b6737e3d79a','35316636-6264-6331-2d34-3933322d3462','GEOGRAPHIC_ZONES_MANAGE',NULL,NULL),
-('d7c453f5-edb2-4c87-8255-57bbec4d0fe1','35316636-6264-6331-2d34-3933322d3462','PROGRAMS_MANAGE',NULL,NULL),
-('855c2c8e-39cb-44ee-a471-03c4002b17e6','35316636-6264-6331-2d34-3933322d3462','SYSTEM_IDEAL_STOCK_AMOUNTS_MANAGE',NULL,NULL),
-('f95d083a-8794-4ee3-9625-64d8cd84a6dc','5806ca9e-24e0-4b40-9638-f551e6048e27','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('3184d624-b92b-40be-923d-e381ed8e8989','81104549-a8e0-454d-86c8-dada103365e1','PROCESSING_SCHEDULES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('aaf0fcb8-44bd-4a79-9fb1-a53f882eb737','81104549-a8e0-454d-86c8-dada103365e1','REPORT_TEMPLATES_EDIT','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('5e57fe3e-34f9-452b-a1f8-4b5fd4bbd7d2','81104549-a8e0-454d-86c8-dada103365e1','REQUISITION_TEMPLATES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('4c60c21a-2036-4440-8064-d8c5ad8fd977','81104549-a8e0-454d-86c8-dada103365e1','PROGRAMS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('5ff0827d-447a-4335-9b21-baa8b2de548a','81104549-a8e0-454d-86c8-dada103365e1','SYSTEM_SETTINGS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('fa2533ae-4dc6-4fba-8bf8-8144334a8dfc','81104549-a8e0-454d-86c8-dada103365e1','FACILITIES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('f454452d-41dc-4a08-a486-bd505b95ae40','81104549-a8e0-454d-86c8-dada103365e1','USER_ROLES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('9e767bd1-0e48-480c-9cf7-c7ae5f156d10','81104549-a8e0-454d-86c8-dada103365e1','REPORTS_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('3c4f2d12-8ca2-4568-a702-686dfc541811','81104549-a8e0-454d-86c8-dada103365e1','USERS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('e41208a0-803d-4253-8ca3-1c5fddae45f6','a3c2508d-f46c-42b7-ab21-7a0fdfa0071e','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('5faef6dc-6a51-4012-9c41-b1faafae9605','c86bfd2c-7a22-4911-a9bc-0921c34681de','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
-('7f518aac-1cc9-4650-9149-35523f2d355d','c86bfd2c-7a22-4911-a9bc-0921c34681de','REQUISITION_VIEW','14617116-12d5-4617-aad0-004c8a2cb83e','19ef7927-2597-4f75-b594-a0807d71f14a');
+('bfbaf426-cdef-492f-90c2-db745dd27fe1','35316636-6264-6331-2d34-3933322d3462','CCE_MANAGE',NULL,NULL),
+('d9981c44-f9ab-4f73-aa8d-1eb571b66c83','35316636-6264-6331-2d34-3933322d3462','FACILITIES_MANAGE',NULL,NULL),
+('d2aa86ed-b9d7-4c35-b93f-027e5065f2e1','35316636-6264-6331-2d34-3933322d3462','FACILITY_APPROVED_ORDERABLES_MANAGE',NULL,NULL),
+('2279d327-a588-4e7a-ba84-ec5278b3a406','35316636-6264-6331-2d34-3933322d3462','GEOGRAPHIC_ZONES_MANAGE',NULL,NULL),
+('570217b9-94c9-4254-8baf-35aaf328a730','35316636-6264-6331-2d34-3933322d3462','ORDERABLES_MANAGE',NULL,NULL),
+('26a4952a-0518-41e9-852a-5dc4590f2f9d','35316636-6264-6331-2d34-3933322d3462','PROCESSING_SCHEDULES_MANAGE',NULL,NULL),
+('deb24f39-1568-4941-9a94-36d47816c028','35316636-6264-6331-2d34-3933322d3462','PROGRAMS_MANAGE',NULL,NULL),
+('2ec8dca6-99b5-4054-ac2e-b32a78929b0b','35316636-6264-6331-2d34-3933322d3462','REQUISITION_GROUPS_MANAGE',NULL,NULL),
+('6ce44c19-54a9-43a3-a31f-d251ffd060ce','35316636-6264-6331-2d34-3933322d3462','REQUISITION_TEMPLATES_MANAGE',NULL,NULL),
+('ee150b06-2f1e-4d68-bac7-29d11f7db232','35316636-6264-6331-2d34-3933322d3462','RIGHTS_VIEW',NULL,NULL),
+('6ccf8c5f-5326-48dd-856c-70ac4be49391','35316636-6264-6331-2d34-3933322d3462','SERVICE_ACCOUNTS_MANAGE',NULL,NULL),
+('6a274f03-21bb-471a-8e80-68ec660f2689','35316636-6264-6331-2d34-3933322d3462','STOCK_ADJUSTMENT_REASONS_MANAGE',NULL,NULL),
+('944dd4c6-9a46-443f-8f62-0b96bb842b1e','35316636-6264-6331-2d34-3933322d3462','STOCK_CARD_LINE_ITEM_REASONS_MANAGE',NULL,NULL),
+('17e6f51e-b35d-4d37-b84e-5ba90858096c','35316636-6264-6331-2d34-3933322d3462','STOCK_CARD_TEMPLATES_MANAGE',NULL,NULL),
+('7e8eaa86-a156-4693-9db7-565498f00746','35316636-6264-6331-2d34-3933322d3462','STOCK_DESTINATIONS_MANAGE',NULL,NULL),
+('13a636aa-5d5b-4194-8e29-2a6e7d6f0daf','35316636-6264-6331-2d34-3933322d3462','STOCK_ORGANIZATIONS_MANAGE',NULL,NULL),
+('93e71eaf-8c1e-49f5-90f8-f44ba611c0d1','35316636-6264-6331-2d34-3933322d3462','STOCK_SOURCES_MANAGE',NULL,NULL),
+('4a30a5b3-9fb5-42a3-8cc9-2c99cf77babe','35316636-6264-6331-2d34-3933322d3462','SUPERVISORY_NODES_MANAGE',NULL,NULL),
+('a57b02a7-1def-42df-b947-8beb532af51d','35316636-6264-6331-2d34-3933322d3462','SUPPLY_LINES_MANAGE',NULL,NULL),
+('be158c98-3c9b-4915-b5e9-5a8a0de74ea3','35316636-6264-6331-2d34-3933322d3462','SUPPLY_PARTNERS_MANAGE',NULL,NULL),
+('d8f8a9c6-1e94-491c-b4d9-74b9be60f3c3','35316636-6264-6331-2d34-3933322d3462','SYSTEM_IDEAL_STOCK_AMOUNTS_MANAGE',NULL,NULL),
+('2ca77a80-b408-4e63-8b3b-4405c86e5211','35316636-6264-6331-2d34-3933322d3462','SYSTEM_SETTINGS_MANAGE',NULL,NULL),
+('59a868ff-cbfd-46d5-a52a-66f66ecc067f','35316636-6264-6331-2d34-3933322d3462','USERS_MANAGE',NULL,NULL),
+('e80a72bc-c5fb-48f7-ade9-c9e7699256db','35316636-6264-6331-2d34-3933322d3462','USER_ROLES_MANAGE',NULL,NULL),
+('312d8733-fd9a-4748-a1ab-7a630e4bb4a2','5806ca9e-24e0-4b40-9638-f551e6048e27','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('cb9b936b-7aee-45ce-8629-df0ebfeb61b2','5b2fbb38-6245-4ca9-9390-7b560985e84d','FACILITIES_MANAGE',NULL,NULL),
+('66303b2c-5c5b-40fc-b25c-38a10f5b2102','5b2fbb38-6245-4ca9-9390-7b560985e84d','PROCESSING_SCHEDULES_MANAGE',NULL,NULL),
+('c057adaf-dcac-484f-8cf2-1be6ee8f5f0e','5b2fbb38-6245-4ca9-9390-7b560985e84d','PROGRAMS_MANAGE',NULL,NULL),
+('70903990-88b2-4030-a657-3beb164277c4','5b2fbb38-6245-4ca9-9390-7b560985e84d','REPORTS_VIEW',NULL,NULL),
+('a449583c-da11-4813-9e16-c7b5ddac4705','5b2fbb38-6245-4ca9-9390-7b560985e84d','REPORT_TEMPLATES_EDIT',NULL,NULL),
+('daf6004e-3db7-4039-ad94-883295000be3','5b2fbb38-6245-4ca9-9390-7b560985e84d','REQUISITION_TEMPLATES_MANAGE',NULL,NULL),
+('424cb4b6-1bb1-45f6-b18c-a96e7aa3a7fb','5b2fbb38-6245-4ca9-9390-7b560985e84d','REQUISITION_VIEW','14617116-12d5-4617-aad0-004c8a2cb83e','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('55aa26fd-4d36-4085-a451-304037f3049c','5b2fbb38-6245-4ca9-9390-7b560985e84d','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('6e40fc7a-aee9-4986-abe7-a75ac6a2f66a','5b2fbb38-6245-4ca9-9390-7b560985e84d','RIGHTS_VIEW',NULL,NULL),
+('617b812a-b225-454b-9dba-4187b328e9ea','5b2fbb38-6245-4ca9-9390-7b560985e84d','SYSTEM_SETTINGS_MANAGE',NULL,NULL),
+('291c2bcf-89bf-4cbf-a08c-f23b578c4582','5b2fbb38-6245-4ca9-9390-7b560985e84d','USERS_MANAGE',NULL,NULL),
+('e138b513-e8a8-447c-add7-cabbedf37137','5b2fbb38-6245-4ca9-9390-7b560985e84d','USER_ROLES_MANAGE',NULL,NULL),
+('44d3c812-816b-4e67-bceb-3fa458feee35','81104549-a8e0-454d-86c8-dada103365e1','FACILITIES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('a4eb9a12-a8aa-4e8e-83cf-80cc73d31c17','81104549-a8e0-454d-86c8-dada103365e1','PROCESSING_SCHEDULES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('6be79ccf-8626-4ed7-b2ba-b82b41446099','81104549-a8e0-454d-86c8-dada103365e1','PROGRAMS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('f58819b4-3c76-48f4-acf6-94bbc4938586','81104549-a8e0-454d-86c8-dada103365e1','REPORTS_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('5b60de68-41d9-4d29-aba7-ea362589d78d','81104549-a8e0-454d-86c8-dada103365e1','REPORT_TEMPLATES_EDIT','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('b20865ae-23e6-47d8-a477-9d1544fe5a20','81104549-a8e0-454d-86c8-dada103365e1','REQUISITION_TEMPLATES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('cc1d8ced-ab4c-4a9c-b8c2-93e8db875c2f','81104549-a8e0-454d-86c8-dada103365e1','RIGHTS_VIEW',NULL,NULL),
+('d61c1947-8f40-4842-a00c-d3b817e12dba','81104549-a8e0-454d-86c8-dada103365e1','SYSTEM_SETTINGS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('14a5aaaa-847a-4cc8-8853-fbea14dc33c9','81104549-a8e0-454d-86c8-dada103365e1','USERS_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('b58ef777-3927-4e14-8a25-d6334b8221c4','81104549-a8e0-454d-86c8-dada103365e1','USER_ROLES_MANAGE','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('2b19b930-9c93-42cf-9441-ce2c7e1875a3','a3c2508d-f46c-42b7-ab21-7a0fdfa0071e','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('976e6a8c-a28b-4620-aee8-8c5bdfc16c02','c86bfd2c-7a22-4911-a9bc-0921c34681de','REQUISITION_VIEW','14617116-12d5-4617-aad0-004c8a2cb83e','19ef7927-2597-4f75-b594-a0807d71f14a'),
+('0e375348-e7ea-4344-8806-21377078aa3a','c86bfd2c-7a22-4911-a9bc-0921c34681de','REQUISITION_VIEW','47cb7b3f-caf0-4164-bf09-46ed5192d3e2','19ef7927-2597-4f75-b594-a0807d71f14a');
