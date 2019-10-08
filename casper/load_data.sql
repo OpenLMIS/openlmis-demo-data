@@ -441,7 +441,7 @@ insert into referencedata.requisition_group_program_schedules (id, requisitionGr
 
 
 insert into requisition.requisition_templates (id, name, archived, populatestockonhandfromstockcards) values
-('a2ade107-dcac-4e34-ae53-1dcfc6f39d5d', 'ILS redesigned template', false, false);
+('19ef7927-2597-4f75-b594-a0807d71f14a', 'ILS redesigned template', false, false);
 
 insert into requisition.requisition_template_assignments (id, templateid, programid, facilityTypeId) values
 ('74b81822-5649-4834-8f2f-004d8e3ce4ee', (select id from requisition.requisition_templates where name='ILS redesigned template'), (select id from referencedata.programs where code='ilshosp'), (select id from referencedata.facility_types where code ='disp'));
