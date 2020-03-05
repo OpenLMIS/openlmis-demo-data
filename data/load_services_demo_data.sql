@@ -36,6 +36,6 @@
 \copy fulfillment.status_changes (id,createdDate,authorId,status,orderId) FROM '/data/demo-data/fulfillment.status_changes.csv' DELIMITER ',' CSV HEADER;
 \copy fulfillment.transfer_properties (id,facilityId,type,protocol,username,password,serverHost,serverPort,remoteDirectory,localDirectory,passiveMode,transferType) FROM '/data/demo-data/fulfillment.transfer_properties.csv' DELIMITER ',' CSV HEADER;
 -- copy auth's service demo data
-\copy auth.oauth_client_details (clientid,clientsecret,authorities,authorizedgranttypes,resourceids,scope,accesstokenvalidity) FROM '/data/demo-data/auth.oauth_client_details.csv' DELIMITER ',' CSV HEADER;
+\copy auth.oauth_client_details (clientid,clientsecret,authorities,authorizedgranttypes,resourceids,scope,accesstokenvalidity,redirecturi) FROM '/data/demo-data/auth.oauth_client_details.csv' DELIMITER ',' CSV HEADER;
 \copy auth.api_keys (token,createdby,createddate,clientid) FROM '/data/demo-data/auth.api_keys.csv' DELIMITER ',' CSV HEADER;
 \copy auth.auth_users (id,enabled,password,username) FROM '/data/demo-data/auth.auth_users.csv' DELIMITER ',' CSV HEADER;
