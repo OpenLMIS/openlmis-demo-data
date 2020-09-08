@@ -39,5 +39,3 @@
 \copy auth.oauth_client_details (clientid,clientsecret,authorities,authorizedgranttypes,resourceids,scope,accesstokenvalidity,redirecturi) FROM '/data/demo-data/auth.oauth_client_details.csv' DELIMITER ',' CSV HEADER;
 \copy auth.api_keys (token,createdby,createddate,clientid) FROM '/data/demo-data/auth.api_keys.csv' DELIMITER ',' CSV HEADER;
 \copy auth.auth_users (id,enabled,password,username) FROM '/data/demo-data/auth.auth_users.csv' DELIMITER ',' CSV HEADER;
--- copy stock management's service demo data
-\copy stockmanagement.valid_reason_assignments (id,programId,facilityTypeId,reasonId,hidden) FROM '/data/demo-data/stockmanagement.valid_reason_assignments.csv' DELIMITER ',' CSV HEADER;
