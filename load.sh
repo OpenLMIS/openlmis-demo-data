@@ -10,7 +10,8 @@ for file in data/schema/schema*.sql; do
     schemaname=${noprefix%.*} # Remove suffix inclusively up to last dot
 
     ${PSQL} -c "drop schema if exists ${schemaname} cascade;" 2>&1
-    ${PSQL} -f $file
+    echo "File: $file"
+    ${PSQL} -bef $file
 done
 
 ${PSQL} -f data/load_data.sql && ${PSQL} -f data/load_services_demo_data.sql
