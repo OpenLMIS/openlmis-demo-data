@@ -12,6 +12,7 @@ for file in data/schema/schema*.sql; do
     ${PSQL} -c "drop schema if exists ${schemaname} cascade;" 2>&1
     echo "File: $file"
     ${PSQL} -bef $file
+    echo "Code $?"
 done
 
 ${PSQL} -f data/load_data.sql && ${PSQL} -f data/load_services_demo_data.sql
