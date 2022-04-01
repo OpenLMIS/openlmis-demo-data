@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-RUN apk update && apk add postgresql-client openjdk8 git
+RUN apk update && apk add postgresql-client openjdk8 git bash
 
 WORKDIR /
 
